@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>CampaignIQ Ad Generator (Flask)</title>
+  <style>
+    body { font-family: sans-serif; max-width: 500px; margin: 2rem auto; padding: 2rem; background: #fcfcfc; }
+    label { display: block; margin-top: 1rem; }
+    input, button { padding: .5rem; width: 100%; margin-top: 0.5rem; }
+    section { margin-top: 2rem; padding: 1rem; border-radius: 8px; border: 2px solid #eee; background: #fff; }
+    img { max-width: 120px; margin: 1rem auto; display: block; }
+  </style>
+</head>
+<body>
+  <h1 style="color: #FF6F61;">CampaignIQ</h1>
+  <form id="adForm">
+    <label>
+      Campaign Name:
+      <input type="text" name="campaign_name" required>
+    </label>
+    <label>
+      Brand Color:
+      <input type="color" name="brand_color" value="#FF6F61">
+    </label>
+    <label>
+      Upload Logo:
+      <input type="file" name="logo">
+    </label>
+    <button type="submit">Generate Ad</button>
+  </form>
+  <section id="output" style="display:none;"></section>
+
+<script>
+document.getElementById('adForm').onsubmit = function(e) {
+  e.preventDefault();
+  let formData = new FormData(this);
+  fetch('/generate', { method: 'POST', body: formData })
+    .then(response => response.json())
+    .then(data => {
+      let out = document.getElementById('output');
+      out.style.display = "block";
+      out.innerHTML =
+        `<h2 style="color:${formData.get('brand_color')}">Ad Preview</h2>
+         <p><b>Copy:</b> ${data.ad_copy}</p>
+         <img src="${data.image_url}" alt="Logo">
+         <p><b>Suggested Posting Time:</b> ${data.suggested_posting_time}</p>`;
+    });
+};
+</script>
+</body>
+</html>
