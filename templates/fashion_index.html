@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionIQ - AI-Powered Fashion Campaigns</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f8f6f4 0%, #e8e6e1 100%);
+            min-height: 100vh;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.4em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 20px 40px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid #e74c3c;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: #e74c3c;
+            transform: translateY(-2px);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 50px 30px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e8e6e1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .feature-card:hover::before {
+            left: 100%;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 30px;
+            color: #9B59B6;
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 400;
+        }
+
+        .feature-card p {
+            color: #7f8c8d;
+            line-height: 1.8;
+            font-size: 1.1em;
+        }
+
+        .fashion-styles {
+            background: #2c3e50;
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .fashion-styles h2 {
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            font-weight: 300;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .style-card {
+            background: rgba(255,255,255,0.1);
+            padding: 30px 20px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .style-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .style-card h4 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .style-card p {
+            color: #bdc3c7;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            background: #34495e;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+
+        .footer p {
+            margin: 10px 0;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            
+            .hero p {
+                font-size: 1.1em;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                padding: 50px 20px;
+            }
+            
+            .style-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="hero">
+        <h1>👗 FashionIQ</h1>
+        <p>AI-Powered Fashion Campaigns for Modern Brands</p>
+        <p>Create stunning fashion campaigns with custom logos, social media content, and strategic scheduling - designed exclusively for fashion and accessories.</p>
+        <a href="/create-campaign" class="cta-button">Create Fashion Campaign</a>
+    </div>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <h3>Fashion Logo Design</h3>
+            <p>Custom fashion logos tailored to your brand's aesthetic - from luxury elegance to streetwear edge.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Social Media Ready</h3>
+            <p>Instagram-perfect posters with integrated logos and fashion-focused content that converts.</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3>Style-Specific Content</h3>
+            <p>Campaigns tailored to your fashion niche - luxury, minimal, vintage, boho, streetwear, and more.</p>
+        </div>
+    </div>
+
+    <div class="fashion-styles">
+        <h2>Fashion Styles We Master</h2>
+        <div class="style-grid">
+            <div class="style-card">
+                <h4>Luxury</h4>
+                <p>Premium & Exclusive</p>
+            </div>
+            <div class="style-card">
+                <h4>Minimal</h4>
+                <p>Clean & Essential</p>
+            </div>
+            <div class="style-card">
+                <h4>Vintage</h4>
+                <p>Classic & Timeless</p>
+            </div>
+            <div class="style-card">
+                <h4>Modern</h4>
+                <p>Contemporary & Bold</p>
+            </div>
+            <div class="style-card">
+                <h4>Boho</h4>
+                <p>Free-spirited & Artisan</p>
+            </div>
+            <div class="style-card">
+                <h4>Streetwear</h4>
+                <p>Urban & Edgy</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2024 FashionIQ. AI-Powered Fashion Marketing.</p>
+        <p>Specialized in Fashion & Accessories Campaigns</p>
+    </div>
+</body>
+</html>

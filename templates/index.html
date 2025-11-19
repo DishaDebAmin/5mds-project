@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero-section">
+    <div class="hero-content">
+        <h1>AI-Powered Advertising in Seconds</h1>
+        <p class="hero-subtitle">Create compelling ad campaigns with artificial intelligence. No design skills required.</p>
+        
+        <div class="hero-features">
+            <div class="feature">
+                <span class="feature-icon">🎨</span>
+                <h3>Design</h3>
+                <p>Generate stunning visual creatives</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">✍️</span>
+                <h3>Copywriting</h3>
+                <p>Create compelling ad copy automatically</p>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📅</span>
+                <h3>Schedule</h3>
+                <p>Optimize posting times for maximum engagement</p>
+            </div>
+        </div>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('create_campaign') }}" class="btn btn-primary">Create Your First Campaign</a>
+            <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
+        </div>
+    </div>
+</div>
+
+<section id="how-it-works" class="how-it-works">
+    <div class="container">
+        <h2>How CampaignIQ Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Describe Your Campaign</h3>
+                <p>Tell us about your brand and campaign goals</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>AI Generates Assets</h3>
+                <p>Our AI creates ad copy and visuals instantly</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Review & Deploy</h3>
+                <p>Get your complete campaign package ready to use</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

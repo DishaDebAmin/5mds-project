@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Campaign - CampaignIQ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .campaign-form {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-group small {
+            display: block;
+            margin-top: 5px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+
+        .style-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .style-option {
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .style-option:hover {
+            border-color: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .style-option.selected {
+            border-color: #3498db;
+            background: #3498db;
+            color: white;
+        }
+
+        .style-option input {
+            display: none;
+        }
+
+        .color-picker {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .color-picker input[type="color"] {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .color-picker span {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .preview-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #3498db;
+        }
+
+        .preview-section h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+
+        .preview-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e9ecef;
+        }
+
+        .preview-headline {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        .preview-description {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+            box-shadow: 0 5px 15px rgba(149, 165, 166, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(149, 165, 166, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #27ae60;
+        }
+
+        .notification.error {
+            background: #e74c3c;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .campaign-form {
+                padding: 20px;
+            }
+            
+            .style-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Create Your Campaign</h1>
+            <p>Generate complete marketing campaigns with AI-powered assets</p>
+        </div>
+
+        <form class="campaign-form" method="POST" action="/create-campaign" onsubmit="handleSubmit(event)">
+            <div class="form-group">
+                <label for="brand_name">Brand Name *</label>
+                <input type="text" id="brand_name" name="brand_name" required 
+                       placeholder="Enter your brand name" value="Zenith Tech">
+                <small>The name of your business or product</small>
+            </div>
+
+            <div class="form-group">
+                <label for="campaign_idea">Campaign Idea *</label>
+                <textarea id="campaign_idea" name="campaign_idea" required 
+                          placeholder="Describe your campaign concept or business idea">Smart home devices that simplify life through intuitive technology and elegant design</textarea>
+                <small>What is your campaign about? Be specific for better results.</small>
+            </div>
+
+            <div class="form-group">
+                <label for="target_audience">Target Audience</label>
+                <input type="text" id="target_audience" name="target_audience" 
+                       placeholder="Describe your ideal customers" value="Tech-savvy professionals aged 25-45 who value convenience">
+                <small>Who are you trying to reach? (age, interests, lifestyle)</small>
+            </div>
+
+            <div class="form-group">
+                <label>Design Style</label>
+                <div class="style-options">
+                    <label class="style-option selected">
+                        <input type="radio" name="style" value="creative" checked>
+                        🎨 Creative
+                    </label>
+                    <label class="style-option">
+                        <input type="radio" name="style" value="modern">
+                        ⚡ Modern
+                    </label>
+                    <label class="style-option">
+                        <input type="radio" name="style" value="minimal">
+                        ✨ Minimal
+                    </label>
+                    <label class="style-option">
+                        <input type="radio" name="style" value="elegant">
+                        💎 Elegant
+                    </label>
+                    <label class="style-option">
+                        <input type="radio" name="style" value="bold">
+                        🔥 Bold
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="logo_prompt">Logo Design Prompt</label>
+                <textarea id="logo_prompt" name="logo_prompt" 
+                          placeholder="Describe how you want your logo to look">minimalist tech logo with geometric elements, representing connectivity and innovation</textarea>
+                <small>Be specific about colors, symbols, and style for better logo generation</small>
+            </div>
+
+            <div class="form-group">
+                <label for="brand_color">Brand Color</label>
+                <div class="color-picker">
+                    <input type="color" id="brand_color" name="brand_color" value="#4A90E2">
+                    <span id="color-value">#4A90E2</span>
+                </div>
+                <small>Primary brand color for your visual identity</small>
+            </div>
+
+            <div class="preview-section">
+                <h3>🎯 AI Preview</h3>
+                <div class="preview-content">
+                    <div class="preview-headline" id="previewHeadline">Intelligent Living, Simplified</div>
+                    <div class="preview-description" id="previewDescription">Discover the future of smart home technology with intuitive devices that learn your routines and create the perfect environment automatically.</div>
+                    <button type="button" class="btn-secondary" onclick="generatePreview()" style="margin-top: 15px;">
+                        🔄 Generate Preview
+                    </button>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary" id="submitBtn">
+                    🚀 Generate Complete Campaign
+                </button>
+                <a href="/" class="btn btn-secondary">
+                    ← Back to Home
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Style option selection
+        document.querySelectorAll('.style-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.style-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                this.querySelector('input').checked = true;
+            });
+        });
+
+        // Color picker value display
+        const colorPicker = document.getElementById('brand_color');
+        const colorValue = document.getElementById('color-value');
+        
+        colorPicker.addEventListener('input', function() {
+            colorValue.textContent = this.value;
+        });
+
+        // Form submission
+        function handleSubmit(event) {
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner"></span> Generating Campaign...';
+            
+            // Form will submit normally
+            return true;
+        }
+
+        // Generate preview
+        async function generatePreview() {
+            const brandName = document.getElementById('brand_name').value;
+            const idea = document.getElementById('campaign_idea').value;
+            
+            if (!brandName || !idea) {
+                showNotification('Please enter brand name and campaign idea', 'error');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/generate-preview', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        brand_name: brandName,
+                        idea: idea
+                    })
+                });
+
+                const data = await response.json();
+                
+                document.getElementById('previewHeadline').textContent = data.headline;
+                document.getElementById('previewDescription').textContent = data.description;
+                
+                showNotification('Preview generated successfully!', 'success');
+            } catch (error) {
+                console.error('Preview generation error:', error);
+                showNotification('Failed to generate preview', 'error');
+            }
+        }
+
+        function showNotification(message, type) {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+
+            document.body.appendChild(notification);
+
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Initialize with sample data
+        document.addEventListener('DOMContentLoaded', function() {
+            generatePreview();
+        });
+    </script>
+</body>
+</html>

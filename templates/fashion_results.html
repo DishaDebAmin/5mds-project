@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaign Results - Fashion CampaignIQ</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #9B59B6;
+            --neutral-dark: #2C3E50;
+            --neutral-light: #f8f9fa;
+            --success-color: #48bb78;
+            --warning-color: #ed8936;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .results-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .results-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .results-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .campaign-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .campaign-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .campaign-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .campaign-card h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: var(--neutral-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+        }
+
+        .campaign-card h2 i {
+            color: var(--primary-color);
+        }
+
+        .logo-preview {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--neutral-light);
+            border-radius: 12px;
+        }
+
+        .logo-preview img {
+            max-width: 200px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .logo-preview img:hover {
+            transform: scale(1.05);
+        }
+
+        .poster-preview {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: var(--neutral-light);
+            border-radius: 12px;
+        }
+
+        .poster-preview img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .poster-preview img:hover {
+            transform: scale(1.02);
+        }
+
+        .design-details {
+            background: var(--neutral-light);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .design-details h4 {
+            margin-bottom: 15px;
+            color: var(--neutral-dark);
+            font-size: 1.1rem;
+        }
+
+        .design-details p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #dd6b20;
+            transform: translateY(-2px);
+        }
+
+        .posting-schedule {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .posting-schedule h2 {
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 20px;
+            color: var(--neutral-dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .platform-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .platform-tab {
+            padding: 12px 24px;
+            background: var(--neutral-light);
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .platform-tab.active {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .platform-tab:hover:not(.active) {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .times-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .time-slot {
+            background: var(--neutral-light);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .time-slot.best {
+            background: linear-gradient(135deg, var(--success-color) 0%, #38a169 100%);
+            color: white;
+        }
+
+        .time-day {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .time-hour {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .engagement-score {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .platform-content {
+            display: none;
+        }
+
+        .platform-content.active {
+            display: block;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .campaign-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .info-item {
+            background: var(--neutral-light);
+            padding: 15px;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+            color: var(--neutral-dark);
+        }
+
+        .ai-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .prompt-section {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .prompt-label {
+            font-weight: 600;
+            color: #856404;
+            margin-bottom: 5px;
+        }
+
+        .prompt-text {
+            color: #856404;
+            font-style: italic;
+        }
+
+        .customization-panel {
+            background: var(--neutral-light);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .customization-panel h4 {
+            margin-bottom: 15px;
+            color: var(--neutral-dark);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: var(--neutral-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .color-input {
+            width: 60px;
+            height: 40px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .color-preview {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .text-preview {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .preview-text {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 1024px) {
+            .campaign-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .results-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .platform-tabs {
+                justify-content: center;
+            }
+            
+            .campaign-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="results-container">
+        <div class="results-header">
+            <h1>Your Fashion Campaign is Ready</h1>
+            <p>AI-generated marketing assets for {{ result.campaign_data.brand_name }}</p>
+        </div>
+
+        <div class="campaign-grid">
+            <!-- Logo Section -->
+            <div class="campaign-card">
+                <h2><i class="fas fa-crown"></i> Brand Logo</h2>
+                
+                {% if result.logo.prompt_used %}
+                <div class="prompt-section">
+                    <div class="prompt-label">Design Prompt Used:</div>
+                    <div class="prompt-text">"{{ result.logo.prompt_used }}"</div>
+                </div>
+                {% endif %}
+                
+                <div class="logo-preview">
+                    <img src="{{ result.logo.path }}" alt="{{ result.campaign_data.brand_name }} Logo" id="logoImage">
+                </div>
+                
+                <div class="design-details">
+                    <h4>Design Details</h4>
+                    <p><strong>Style:</strong> {{ result.logo.style|title }}</p>
+                    <p><strong>Design Philosophy:</strong> {{ result.logo.design_reason }}</p>
+                </div>
+
+                <div class="customization-panel">
+                    <h4>Redesign Logo</h4>
+                    <div class="form-group">
+                        <label for="newLogoPrompt">Design Instructions</label>
+                        <input type="text" class="form-control" id="newLogoPrompt" 
+                               placeholder="Describe your new logo vision (e.g., 'minimalist geometric design with modern typography')" 
+                               value="{{ result.logo.prompt_used or '' }}">
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary" onclick="redoLogoWithPrompt()">
+                            <i class="fas fa-magic"></i> Generate New Logo
+                        </button>
+                        <a href="/download-logo/{{ result.logo.filename }}" class="btn btn-secondary">
+                            <i class="fas fa-download"></i> Download Logo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Poster Section -->
+            <div class="campaign-card">
+                <h2><i class="fas fa-image"></i> Social Media Poster</h2>
+                <div class="poster-preview">
+                    <img src="{{ result.poster.path }}" alt="{{ result.campaign_data.brand_name }} Poster" id="posterImage">
+                </div>
+                
+                <div class="design-details">
+                    <h4>Campaign Copy</h4>
+                    <p><strong>Tagline:</strong> {{ result.tagline }}</p>
+                    <p><strong>Description:</strong> {{ result.ad_copy.description }}</p>
+                    <p><strong>Call to Action:</strong> {{ result.ad_copy.cta }}</p>
+                </div>
+
+                <div class="customization-panel">
+                    <h4>Customize Poster</h4>
+                    
+                    <div class="form-group">
+                        <label for="customTagline">Tagline</label>
+                        <input type="text" class="form-control" id="customTagline" value="{{ result.tagline }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customDescription">Description</label>
+                        <textarea class="form-control" id="customDescription" rows="3">{{ result.ad_copy.description }}</textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="customCTA">Call to Action</label>
+                        <input type="text" class="form-control" id="customCTA" value="{{ result.ad_copy.cta }}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Color Scheme</label>
+                        <div class="color-picker">
+                            <input type="color" class="color-input" id="primaryColor" value="{{ result.colors.primary }}">
+                            <div class="color-preview" id="colorPreview" style="background-color: {{ result.colors.primary }};"></div>
+                            <span>Primary Color</span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-preview">
+                        <div class="preview-text"><strong>Preview:</strong></div>
+                        <div class="preview-text" id="previewTagline">{{ result.tagline }}</div>
+                        <div class="preview-text" id="previewDescription">{{ result.ad_copy.description }}</div>
+                        <div class="preview-text" id="previewCTA">{{ result.ad_copy.cta }}</div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn btn-warning" onclick="updatePosterDesign()">
+                            <i class="fas fa-palette"></i> Apply Changes
+                        </button>
+                        <a href="/download-poster/{{ result.poster.filename }}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download Poster
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- XGBoost Posting Schedule -->
+        <div class="posting-schedule">
+            <h2><i class="fas fa-clock"></i> AI-Powered Posting Schedule <span class="ai-badge">XGBoost</span></h2>
+            <p>Optimal posting times predicted by machine learning based on your audience and content type</p>
+            
+            <div class="platform-tabs">
+                {% for platform in result.posting_schedule %}
+                <div class="platform-tab {% if loop.first %}active{% endif %}" 
+                     onclick="showPlatform('{{ platform }}')">
+                    <i class="fab fa-{{ platform }}"></i> {{ platform|title }}
+                </div>
+                {% endfor %}
+            </div>
+
+            {% for platform, data in result.posting_schedule.items() %}
+            <div class="platform-content {% if loop.first %}active{% endif %}" id="platform-{{ platform }}">
+                <div class="campaign-info">
+                    <div class="info-item">
+                        <div class="info-label">Maximum Engagement Score</div>
+                        <div class="info-value">{{ data.max_engagement }}/100</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Platform Algorithm</div>
+                        <div class="info-value">{{ platform|title }} Optimization</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Content Strategy</div>
+                        <div class="info-value">{{ result.campaign_data.content_type|replace('_', ' ')|title }}</div>
+                    </div>
+                </div>
+
+                <h4>Optimal Posting Schedule:</h4>
+                <div class="times-grid">
+                    {% for time in data.best_times %}
+                    <div class="time-slot {% if loop.first %}best{% endif %}">
+                        <div class="time-day">{{ time.day }}</div>
+                        <div class="time-hour">{{ time.hour }}</div>
+                        <div class="engagement-score">Engagement Score: {{ time.score }}</div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Campaign Summary -->
+        <div class="campaign-card full-width">
+            <h2><i class="fas fa-chart-bar"></i> Campaign Summary</h2>
+            <div class="campaign-info">
+                <div class="info-item">
+                    <div class="info-label">Brand Identity</div>
+                    <div class="info-value">{{ result.campaign_data.brand_name }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Target Demographic</div>
+                    <div class="info-value">{{ result.campaign_data.target_audience }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Design Aesthetic</div>
+                    <div class="info-value">{{ result.campaign_data.style|title }}</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Generation Timestamp</div>
+                    <div class="info-value">{{ result.generated_at }}</div>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="/create-campaign" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Create New Campaign
+                </a>
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <button class="btn btn-success" onclick="shareCampaign()">
+                    <i class="fas fa-share"></i> Share Campaign
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Platform tabs functionality
+        function showPlatform(platform) {
+            document.querySelectorAll('.platform-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.platform-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.getElementById('platform-' + platform).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Logo regeneration with prompt
+        function redoLogoWithPrompt() {
+            const newPrompt = document.getElementById('newLogoPrompt').value;
+            const campaignData = {{ result.campaign_data|tojson }};
+            
+            if (!newPrompt.trim()) {
+                alert('Please enter logo design instructions');
+                return;
+            }
+            
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating...';
+            btn.disabled = true;
+            
+            fetch('/api/redo-logo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    brand_name: campaignData.brand_name,
+                    style: campaignData.style,
+                    logo_prompt: newPrompt
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const logoImg = document.getElementById('logoImage');
+                    const designDetails = document.querySelector('.design-details');
+                    
+                    logoImg.src = data.logo.path + '?t=' + new Date().getTime();
+                    
+                    designDetails.innerHTML = `
+                        <h4>Design Details</h4>
+                        <p><strong>Style:</strong> ${data.logo.style.charAt(0).toUpperCase() + data.logo.style.slice(1)}</p>
+                        <p><strong>Design Philosophy:</strong> ${data.logo.design_reason}</p>
+                    `;
+                    
+                    const promptSection = document.querySelector('.prompt-section');
+                    if (promptSection) {
+                        promptSection.innerHTML = `
+                            <div class="prompt-label">Design Prompt Used:</div>
+                            <div class="prompt-text">"${newPrompt}"</div>
+                        `;
+                    }
+                    
+                    const downloadLink = document.querySelector('a[href*="download-logo"]');
+                    downloadLink.href = '/download-logo/' + data.logo.filename;
+                    
+                    showNotification('Logo redesigned successfully', 'success');
+                } else {
+                    showNotification('Error redesigning logo: ' + data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error redesigning logo', 'error');
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        // Poster customization
+        function updatePosterDesign() {
+            const campaignData = {{ result.campaign_data|tojson }};
+            const adCopy = {{ result.ad_copy|tojson }};
+            const colors = {{ result.colors|tojson }};
+            
+            const customText = {
+                'brand': campaignData.brand_name,
+                'tagline': document.getElementById('customTagline').value,
+                'description': document.getElementById('customDescription').value,
+                'cta': document.getElementById('customCTA').value
+            };
+            
+            const customColors = {
+                ...colors,
+                'primary': document.getElementById('primaryColor').value
+            };
+            
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Updating...';
+            btn.disabled = true;
+            
+            fetch('/api/update-poster', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    brand_name: campaignData.brand_name,
+                    tagline: customText.tagline,
+                    ad_copy: {
+                        ...adCopy,
+                        description: customText.description,
+                        cta: customText.cta
+                    },
+                    logo_path: "{{ result.logo.path }}",
+                    colors: colors,
+                    style: campaignData.style,
+                    custom_text: customText,
+                    custom_colors: customColors
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const posterImg = document.getElementById('posterImage');
+                    posterImg.src = data.poster.path + '?t=' + new Date().getTime();
+                    
+                    const downloadLink = document.querySelector('a[href*="download-poster"]');
+                    downloadLink.href = '/download-poster/' + data.poster.filename;
+                    
+                    showNotification('Poster updated successfully', 'success');
+                } else {
+                    showNotification('Error updating poster: ' + data.error, 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                showNotification('Error updating poster', 'error');
+            })
+            .finally(() => {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        }
+
+        // Color picker preview
+        document.getElementById('primaryColor').addEventListener('input', function() {
+            document.getElementById('colorPreview').style.backgroundColor = this.value;
+        });
+
+        // Text preview updates
+        document.getElementById('customTagline').addEventListener('input', function() {
+            document.getElementById('previewTagline').textContent = this.value;
+        });
+
+        document.getElementById('customDescription').addEventListener('input', function() {
+            document.getElementById('previewDescription').textContent = this.value;
+        });
+
+        document.getElementById('customCTA').addEventListener('input', function() {
+            document.getElementById('previewCTA').textContent = this.value;
+        });
+
+        // Share functionality
+        function shareCampaign() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Fashion Campaign - {{ result.campaign_data.brand_name }}',
+                    text: 'Check out my AI-generated fashion campaign!',
+                    url: window.location.href
+                })
+                .catch(console.error);
+            } else {
+                navigator.clipboard.writeText(window.location.href)
+                    .then(() => showNotification('Campaign link copied to clipboard', 'success'))
+                    .catch(() => alert('Please copy the URL manually: ' + window.location.href));
+            }
+        }
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 20px;
+                background: ${type === 'success' ? '#48bb78' : '#e53e3e'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 1000;
+                font-weight: 500;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => document.body.removeChild(notification), 500);
+            }, 3000);
+        }
+
+        // Interactive animations
+        document.querySelectorAll('.time-slot').forEach(slot => {
+            slot.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            slot.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Initialize color preview
+        document.getElementById('colorPreview').style.backgroundColor = document.getElementById('primaryColor').value;
+    </script>
+</body>
+</html>
